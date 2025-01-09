@@ -35,11 +35,21 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	// Lombok
-	implementation("org.projectlombok:lombok")
-
 	//Swagger
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+	// Lombok
+//	implementation("org.projectlombok:lombok")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
+
+	//QueryDsl
+	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+	implementation("com.querydsl:querydsl-apt")
+	annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
+	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
 	// DB
 	runtimeOnly("com.mysql:mysql-connector-j")
