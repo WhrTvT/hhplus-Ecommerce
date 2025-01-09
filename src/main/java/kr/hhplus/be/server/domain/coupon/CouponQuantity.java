@@ -1,7 +1,6 @@
 package kr.hhplus.be.server.domain.coupon;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,26 +15,33 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Coupon {
+public class CouponQuantity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long couponQuantityId;
+
+    @Column(insertable=false, updatable=false)
     private long couponId;
 
-    @NotBlank
-    private String couponName;
-
-    @NotBlank
-    private BigDecimal discount;
-
-    @NotBlank
-    private boolean is_percent;
-
-    @NotBlank
-    private LocalDateTime expiredAt;
+    private long quantity;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @OneToOne
+    @JoinColumn(name = "CouponId")
+    private Coupon coupon;
+
+    @Builder
+    public CouponQuantity(long couponId, long quantity){
+        this.couponId = couponId;
+        this.quantity = quantity;
+    }
+
+    public void couponIssued() {
+        this.quantity -= 1;
+    }
 }
