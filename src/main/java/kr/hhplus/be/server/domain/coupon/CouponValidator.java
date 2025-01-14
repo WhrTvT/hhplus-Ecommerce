@@ -22,7 +22,7 @@ public class CouponValidator {
     }
 
     public CouponQuantity validateOfFindCouponQuantityById(long couponId) {
-        return couponRepository.findCouponQuantityById(couponId)
+        return couponRepository.findCouponQuantityByIdWithLock(couponId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUANTITY_NOT_FOUND));
     }
 

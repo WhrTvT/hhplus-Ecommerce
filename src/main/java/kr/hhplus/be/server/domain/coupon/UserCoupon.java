@@ -31,7 +31,7 @@ public class UserCoupon {
 
     @Column(length=50)
     @NotBlank
-    private String status = "UNUSED";
+    private String status;
 
     @NotBlank
     private LocalDateTime issueAt;

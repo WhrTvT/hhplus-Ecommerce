@@ -27,7 +27,6 @@ public class Coupon {
     @NotBlank
     private BigDecimal discount;
 
-    @NotBlank
     private boolean is_percent;
 
     @NotBlank

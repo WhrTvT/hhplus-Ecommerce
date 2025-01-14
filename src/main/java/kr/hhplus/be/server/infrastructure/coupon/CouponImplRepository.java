@@ -12,6 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CouponImplRepository implements CouponRepository {
     private final CouponJpaRepository couponJpaRepository;
+    private final CouponQuantityJpaRepository couponQuantityJpaRepository;
 
 
     @Override
@@ -20,12 +21,17 @@ public class CouponImplRepository implements CouponRepository {
     }
 
     @Override
-    public Optional<CouponQuantity> findCouponQuantityById(long couponId) {
+    public Optional<CouponQuantity> findCouponQuantityByIdWithLock(long couponId) {
         return couponJpaRepository.findCouponQuantityById(couponId);
     }
 
     @Override
     public Coupon save(Coupon coupon) {
         return couponJpaRepository.save(coupon);
+    }
+
+    @Override
+    public CouponQuantity save(CouponQuantity couponQuantity) {
+        return couponQuantityJpaRepository.save(couponQuantity);
     }
 }

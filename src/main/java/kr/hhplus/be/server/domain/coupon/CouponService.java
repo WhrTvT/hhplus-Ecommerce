@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CouponService {
     private final UserCouponRepository userCouponRepository;
-    private final UserRepository userRepository;
     private final CouponValidator couponValidator;
     private final UserValidator userValidator;
 
