@@ -1,21 +1,18 @@
 package kr.hhplus.be.server.interfaces.response;
 
+import kr.hhplus.be.server.application.out.UserWalletInfo;
+
+import java.math.BigDecimal;
 
 public record UserWalletResponse(
         long userId,
-        long currentAmount
+        BigDecimal currentAmount
 ) {
-//    public static UserWalletResponse from(UserWallet userWallet){
-//        return new UserWalletResponse(
-//                userWallet.getUserId(),
-//                userWallet.getCurrentAmount()
-//        );
-//    }
 
-    public static UserWalletResponse mock(long userId){
+    public static UserWalletResponse from(UserWalletInfo userWalletInfo) {
         return new UserWalletResponse(
-                userId,
-                100_000L
+                userWalletInfo.userId(),
+                userWalletInfo.currentAmount()
         );
     }
 }

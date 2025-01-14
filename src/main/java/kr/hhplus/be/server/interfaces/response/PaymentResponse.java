@@ -1,19 +1,25 @@
 package kr.hhplus.be.server.interfaces.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import kr.hhplus.be.server.application.out.PaymentInfo;
+
+import java.time.LocalDateTime;
+
 public record PaymentResponse(
         long paymentId,
         long orderId,
         String method,
         String status,
-        String paymentAt
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+        LocalDateTime paymentAt
 ) {
-    public static PaymentResponse mock(long orderId) {
+    public static PaymentResponse from(PaymentInfo paymentInfo) {
         return new PaymentResponse(
-                1L,
-                orderId,
-                "CARD",
-                "SUCCESS",
-                "2024-01-03T04:30:01"
+                paymentInfo.paymentId(),
+                paymentInfo.orderId(),
+                paymentInfo.method(),
+                paymentInfo.status(),
+                paymentInfo.paymentAt()
         );
     }
 }
