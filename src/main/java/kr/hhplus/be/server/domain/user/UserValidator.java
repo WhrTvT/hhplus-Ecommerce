@@ -1,8 +1,9 @@
 package kr.hhplus.be.server.domain.user;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
+import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,11 +14,11 @@ public class UserValidator {
 
     public User validateOfUserFindById(long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "User not found"));
     }
 
     public UserWallet validateOfUserWalletFindByUserId(long userId) {
         return userWalletRepository.findByUserId(userId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.WALLET_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "Wallet not found"));
     }
 }

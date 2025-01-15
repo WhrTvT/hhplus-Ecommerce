@@ -1,8 +1,10 @@
 package kr.hhplus.be.server.domain.order;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
+import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,12 +16,12 @@ public class OrderValidator {
 
     public Orders validateOfOrderFindById(long orderId) {
         return ordersRepository.findById(orderId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ORDER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "Order not found"));
     }
 
     public List<OrderDetail> validateOfOrderDetailIsEmpty(List<OrderDetail> orderDetailList) {
         if (orderDetailList.isEmpty()) {
-            throw new BusinessLogicException(ExceptionCode.ORDER_DETAIL_NOT_FOUND);
+            throw new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "Order Detail not found");
         } else {
             return orderDetailList;
         }

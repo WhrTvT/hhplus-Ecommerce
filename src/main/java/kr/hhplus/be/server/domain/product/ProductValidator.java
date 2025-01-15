@@ -1,9 +1,11 @@
 package kr.hhplus.be.server.domain.product;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
+import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ExceptionCode;
 import kr.hhplus.be.server.domain.product.response.ProductWithProductStockDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ public class ProductValidator {
         Page<ProductWithProductStockDTO> products = productRepository.findProductWithStock(pageable);
 
         if (products.isEmpty()) {
-            throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND);
+            throw new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "Product not found");
         } else{
             return products;
         }
