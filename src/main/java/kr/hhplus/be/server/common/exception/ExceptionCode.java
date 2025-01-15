@@ -1,22 +1,21 @@
 package kr.hhplus.be.server.common.exception;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ExceptionCode {
-    USER_NOT_FOUND(400, "User Not Found"),
-    WALLET_NOT_FOUND(401, "Wallet Not Found"),
-    COUPON_NOT_FOUND(402, "Coupon Not Found"),
-    QUANTITY_NOT_FOUND(403, "Quantity Not Found"),
-    COUPON_MAX_ISSUED(404, "Coupon Max Issued"),
-    USER_COUPON_NOT_FOUND(405, "UserCoupon Not Found"),
-    ORDER_NOT_FOUND(406, "Order Not Found"),
-    WALLET_IS_DECLINED(407, "Wallet Is Declined"),
-    ORDER_DETAIL_NOT_FOUND(408, "Order Detail Not Found"),
-    PRODUCT_NOT_FOUND(409,"Product Not Found");
+    TEST_ERROR(HttpStatus.BAD_REQUEST, "테스트 에러입니다."), // Test Error
+    NOT_FOUND_END_POINT(HttpStatus.NOT_FOUND, "존재하지 않는 API입니다."), // 404 Not Found
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."), // 500 Internal Server Error
 
-    private final int code;
-    private final String message;
+    NOT_FOUND_SERVICE(HttpStatus.NOT_FOUND, "Not Found"),
+    CONFLICT_SERVICE(HttpStatus.CONFLICT, "Conflict"),
+    PAYMENT_REQUIRED_SERVICE(HttpStatus.PAYMENT_REQUIRED, "Payment Required");
+
+    private final HttpStatus httpStatus;	// HttpStatus
+    private final String message;			// 설명
 }
