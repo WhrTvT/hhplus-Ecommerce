@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.common.config;
+package kr.hhplus.be.server.interfaces.config.swagger;
 
 // http://localhost:8080/swagger-ui/index.html 로 접속하여 API 명세를 받아볼 수 있다.
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class SwaggerConfiguration {
+public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
 
