@@ -1,20 +1,19 @@
 package kr.hhplus.be.server.domain.order;
 
 import kr.hhplus.be.server.application.in.OrdersCommand;
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
-import kr.hhplus.be.server.common.exception.ExceptionCode;
 import kr.hhplus.be.server.domain.coupon.*;
 import kr.hhplus.be.server.domain.order.response.OrderDetailDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
     private final OrdersRepository ordersRepository;
     private final OrderDetailRepository orderDetailRepository;
@@ -51,6 +50,9 @@ public class OrderService {
 
         // 3. Orders 저장
         Orders savedOrders = ordersRepository.save(orders);
+
+        // 통계로그 : 주문 생성 시, final price 가격
+        log.info("userId: {}, couponDiscount: {}, finalPrice: {}", savedOrders.getUserId(), savedOrders.getCouponDiscount(), savedOrders.getFinalPrice());
 
         return savedOrders;
     }
