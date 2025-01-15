@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Payment { // TODO - Validation_Annotations added to All Entity's
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

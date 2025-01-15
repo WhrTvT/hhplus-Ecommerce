@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,10 +53,18 @@ public class Orders {
     @JoinColumn(name = "userCouponId")
     private UserCoupon userCoupon;
 
+    public BigDecimal getCouponDiscount(BigDecimal totalPrice, BigDecimal discount, boolean isPercent) {
+        if(isPercent){
+            return totalPrice.divide(discount, 0, RoundingMode.HALF_UP);
+        } else {
+            return totalPrice.subtract(discount);
+        }
+    }
+
     public BigDecimal getTotalPrice(List<OrderDetail> orderDetails) {
         // 총 가격 계산
         return orderDetails.stream()
-                .map(detail -> detail.getUnitPrice().multiply(BigDecimal.valueOf(detail.getSelect_quantity())))
+                .map(detail -> detail.getUnitPrice().multiply(BigDecimal.valueOf(detail.getSelectQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

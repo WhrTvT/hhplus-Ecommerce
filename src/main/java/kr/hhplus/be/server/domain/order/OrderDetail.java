@@ -33,7 +33,7 @@ public class OrderDetail {
     private long productId;
 
     @NotBlank
-    private long select_quantity;
+    private long selectQuantity;
 
     @NotBlank
     private BigDecimal unitPrice;

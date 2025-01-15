@@ -49,25 +49,4 @@ public class UserCoupon {
     @ManyToOne
     @JoinColumn(name = "couponId")
     private Coupon coupon;
-
-    @Builder
-    public UserCoupon(
-            long couponId,
-            long userId,
-            String status,
-            LocalDateTime issueAt
-    ){
-        this.couponId = couponId;
-        this.userId = userId;
-        this.status = status;
-        this.issueAt = issueAt;
-    }
-
-    public BigDecimal getCouponDiscount(BigDecimal totalPrice, BigDecimal discount, boolean isPercent) {
-        if(isPercent){
-            return totalPrice.divide(discount, 0, RoundingMode.HALF_UP);
-        } else {
-            return totalPrice.subtract(discount);
-        }
-    }
 }

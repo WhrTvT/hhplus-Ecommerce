@@ -31,7 +31,7 @@ public class ProductCustomImplRepository implements ProductCustomRepository {
                                 product.name,
                                 product.detail,
                                 product.price,
-                                orderDetail.select_quantity.sum()
+                                orderDetail.selectQuantity.sum()
                         )
                 )
                 .from(product)
@@ -45,7 +45,7 @@ public class ProductCustomImplRepository implements ProductCustomRepository {
                         .and(productStock.quantity.isNotNull())
                 )
                 .groupBy(product.productId)
-                .orderBy(orderDetail.select_quantity.sum().desc())
+                .orderBy(orderDetail.selectQuantity.sum().desc())
                 .limit(top)
                 .fetch();
     }

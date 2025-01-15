@@ -37,7 +37,7 @@ public class OrderService {
 
         Orders orders = new Orders();
         BigDecimal totalPrice = orders.getTotalPrice(selectedOrderDetails);
-        BigDecimal couponDiscount = userCoupon.getCouponDiscount(totalPrice, coupon.getDiscount(), coupon.is_percent());
+        BigDecimal couponDiscount = orders.getCouponDiscount(totalPrice, coupon.getDiscount(), coupon.isPercent());
         BigDecimal finalPrice = orders.getFinalPrice(totalPrice, couponDiscount);
 
         orders = Orders.builder()

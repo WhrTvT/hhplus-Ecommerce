@@ -3,7 +3,6 @@ package kr.hhplus.be.server.domain.product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -38,8 +37,7 @@ public class ProductStock {
     @JoinColumn(name = "productId")
     private Product product;
 
-    @Builder
-    public ProductStock(long quantity) {
-        this.quantity = quantity;
+    public void decrementalQuantity(long quantity) {
+        this.quantity -= quantity;
     }
 }

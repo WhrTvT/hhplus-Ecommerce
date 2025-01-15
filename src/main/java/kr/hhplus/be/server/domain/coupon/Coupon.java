@@ -27,7 +27,7 @@ public class Coupon {
     @NotBlank
     private BigDecimal discount;
 
-    private boolean is_percent;
+    private boolean isPercent;
 
     @NotBlank
     private LocalDateTime expiredAt;
@@ -37,4 +37,8 @@ public class Coupon {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public CouponQuantity setQuantity(long quantity) {
+        return CouponQuantity.builder().quantity(quantity).build();
+    }
 }

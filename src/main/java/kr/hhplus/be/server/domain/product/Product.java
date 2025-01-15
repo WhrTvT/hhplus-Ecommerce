@@ -36,19 +36,4 @@ public class Product {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @Builder
-    public Product(
-            String name,
-            String detail,
-            BigDecimal price,
-            long quantity
-    ) {
-        this.name = name;
-        this.detail = detail;
-        this.price = price;
-        ProductStock.builder()
-                .quantity(quantity)
-                .build();
-    }
 }
