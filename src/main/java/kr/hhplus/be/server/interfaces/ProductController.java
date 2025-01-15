@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.hhplus.be.server.application.ProductUseCase;
 import kr.hhplus.be.server.application.out.ProductInfo;
+import kr.hhplus.be.server.common.exception.ApiResponse;
 import kr.hhplus.be.server.interfaces.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,15 +31,11 @@ public class ProductController {
     @Parameter(name = "sort", description = "소팅 기준")
     @Parameter(name = "direction", description = "내림/오름차순")
     @GetMapping("/products")
-    public ResponseEntity<Page<ProductResponse>> Products(
+    public ApiResponse<Page<ProductResponse>> Products(
              Pageable pageable
     ) {
-
         Page<ProductInfo> products = productUseCase.getProducts(pageable);
-        log.info("Products : {}", products);
-
-//        return ResponseEntity.ok(ProductResponseMock.mock(pageable));
-        return ResponseEntity.ok(products.map(ProductResponse::from));
+        return ApiResponse.success(products.map(ProductResponse::from));
     }
 
     // 상위 상품 조회
@@ -46,14 +43,11 @@ public class ProductController {
     @Parameter(name = "top", description = "상위 상품 개수")
     @Parameter(name = "day", description = "기준 날짜")
     @GetMapping("/top-product")
-    public ResponseEntity<List<ProductResponse>> TopProducts(
+    public ApiResponse<List<ProductResponse>> TopProducts(
             @RequestParam(value = "top",defaultValue = "5")int top,
             @RequestParam(value = "day",defaultValue = "3")int day
     ){
         List<ProductInfo> topProducts = productUseCase.getTopProducts(top, day);
-        log.info("Top Products : {}", topProducts);
-
-//        return ResponseEntity.ok(TopProductResponseMock.mock(top, day));
-        return ResponseEntity.ok(topProducts.stream().map(ProductResponse::from).toList());
+        return ApiResponse.success(topProducts.stream().map(ProductResponse::from).toList());
     }
 }

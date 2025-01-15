@@ -15,7 +15,7 @@ public class DataPlatformService {
     }
 
     public String sendPaymentToMockPlatform(PaymentInfo paymentInfo) {
-        String mockApiUrl = "http://localhost:8080/mock/dataplatform/payments";
+        String mockApiUrl = "http://localhost:8080/mock/dataPlatform";
         ResponseEntity<String> response = restTemplate.postForEntity(mockApiUrl, paymentInfo, String.class);
 
         return response.getBody();

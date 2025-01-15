@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.hhplus.be.server.application.OrderUseCase;
 import kr.hhplus.be.server.application.out.OrderInfo;
+import kr.hhplus.be.server.common.exception.ApiResponse;
 import kr.hhplus.be.server.interfaces.mock.response.OrderResponseMock;
 import kr.hhplus.be.server.interfaces.request.OrderRequest;
 import kr.hhplus.be.server.interfaces.response.OrderResponse;
@@ -25,12 +26,10 @@ public class OrderController {
     @Operation(summary = "상품 주문", description = "Body로 받은 주문 정보로 주문 내역을 생성합니다.")
     @Parameter(name = "orderRequest", description = "주문 생성 Req 정보")
     @PostMapping("/order")
-    public ResponseEntity<OrderResponse> doOrder(
+    public ApiResponse<OrderResponse> doOrder(
             @RequestBody OrderRequest orderRequest
     ) {
         OrderInfo orderInfo = orderUseCase.productOrder(orderRequest.userId(), orderRequest.user_coupon_id(), orderRequest.orderDetailLists());
-
-//        return ResponseEntity.ok(OrderResponseMock.mock(orderRequest.userId()));
-        return ResponseEntity.ok(OrderResponse.from(orderInfo));
+        return ApiResponse.success(OrderResponse.from(orderInfo));
     }
 }
