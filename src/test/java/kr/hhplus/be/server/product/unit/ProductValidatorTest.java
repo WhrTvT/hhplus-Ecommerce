@@ -1,8 +1,9 @@
-package kr.hhplus.be.server.domain.product;
+package kr.hhplus.be.server.product.unit;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
+import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.domain.product.ProductRepository;
+import kr.hhplus.be.server.domain.product.ProductValidator;
 import kr.hhplus.be.server.domain.product.response.ProductWithProductStockDTO;
-import kr.hhplus.be.server.interfaces.mock.response.ProductResponseMock;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,11 @@ import org.springframework.data.domain.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-class ProductTest {
+class ProductValidatorTest {
 
     @Mock
     ProductRepository productRepository;
@@ -45,7 +45,7 @@ class ProductTest {
         // then
         assertThatThrownBy(() -> {
             productValidator.validateOfProductFindById(pageable);
-        }).isInstanceOf(BusinessLogicException.class).hasMessage("Product Not Found");
+        }).isInstanceOf(CustomException.class).hasMessage("Product Not Found");
     }
 
     @Test

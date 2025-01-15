@@ -1,7 +1,7 @@
-package kr.hhplus.be.server.domain.order;
+package kr.hhplus.be.server.order.unit;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
-import kr.hhplus.be.server.domain.order.response.OrderDetailDTO;
+import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.domain.order.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,21 +12,58 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-class OrderDetailTest {
+class OrdersValidatorTest {
+
+    @Mock
+    OrdersRepository ordersRepository;
 
     @Mock
     OrderDetailRepository orderDetailRepository;
 
     @InjectMocks
     OrderValidator orderValidator;
+
+    @Test
+    @DisplayName("🔴 주문이 존재하지 않으면 BusinessException 발생")
+    void testOrderNotFound() {
+        // given
+        Mockito.when(ordersRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // when
+        // then
+        assertThatThrownBy(() -> {
+            orderValidator.validateOfOrderFindById(1L);
+        }).isInstanceOf(CustomException.class).hasMessage("Order Not Found");
+    }
+
+    @Test
+    @DisplayName("🟢 주문이 존재하면 Order 정보를 리턴")
+    void testOrderFound() {
+        // given
+        Orders order = Orders.builder()
+                .orderId(1L)
+                .userId(1L)
+                .userCouponId(1L)
+                .couponDiscount(new BigDecimal("10000"))
+                .totalPrice(new BigDecimal("100000"))
+                .finalPrice(new BigDecimal("90000"))
+                .build();
+
+        Mockito.when(ordersRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        // when
+        Orders loadOrder = orderValidator.validateOfOrderFindById(1L);
+
+        // then
+        Assertions.assertThat(order).isEqualTo(loadOrder);
+    }
 
     @Test
     @DisplayName("🔴 주문 상세가 존재하지 않으면 BusinessException 발생")
@@ -38,7 +75,7 @@ class OrderDetailTest {
         // then
         assertThatThrownBy(() -> {
             orderValidator.validateOfOrderDetailIsEmpty(productIds);
-        }).isInstanceOf(BusinessLogicException.class).hasMessage("Order Detail Not Found");
+        }).isInstanceOf(CustomException.class).hasMessage("Order Detail Not Found");
     }
 
     @Test
@@ -52,7 +89,7 @@ class OrderDetailTest {
                 .userId(1L)
                 .orderId(1L)
                 .productId(1L)
-                .select_quantity(100L)
+                .selectQuantity(100L)
                 .unitPrice(new BigDecimal("10000"))
                 .build();
         OrderDetail orderDetail2 = OrderDetail.builder()
@@ -60,7 +97,7 @@ class OrderDetailTest {
                 .userId(1L)
                 .orderId(1L)
                 .productId(2L)
-                .select_quantity(10L)
+                .selectQuantity(10L)
                 .unitPrice(new BigDecimal("1000"))
                 .build();
 

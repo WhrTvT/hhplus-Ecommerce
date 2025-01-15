@@ -1,6 +1,9 @@
-package kr.hhplus.be.server.domain.user;
+package kr.hhplus.be.server.user.unit;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
+import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.domain.user.User;
+import kr.hhplus.be.server.domain.user.UserRepository;
+import kr.hhplus.be.server.domain.user.UserValidator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +18,7 @@ import java.util.Optional;
 import static  org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserTest {
+class UserValidatorTest {
 
     @Mock
     UserRepository userRepository;
@@ -33,7 +36,7 @@ class UserTest {
         // then
         assertThatThrownBy(() -> {
             userValidator.validateOfUserFindById(1L);
-        }).isInstanceOf(BusinessLogicException.class).hasMessage("User Not Found");
+        }).isInstanceOf(CustomException.class).hasMessage("User Not Found");
     }
 
     @Test
