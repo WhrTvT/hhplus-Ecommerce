@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -14,6 +15,7 @@ public class ProductImplRepository implements ProductRepository {
     private final ProductJpaRepository productJpaRepository;
 
     @Override
+    @Transactional
     public Page<ProductWithProductStockDTO> findProductWithStock(Pageable pageable) {
         return productJpaRepository.findProductWithStock(pageable);
     }
