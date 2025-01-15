@@ -4,9 +4,9 @@ import kr.hhplus.be.server.domain.order.OrderDetail;
 import kr.hhplus.be.server.domain.order.OrderDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
@@ -17,5 +17,11 @@ public class OrderDetailImplRepository implements OrderDetailRepository {
     @Override
     public List<OrderDetail> findAllByProductIds(List<Long> productIds) {
         return orderDetailJpaRepository.findAllById(productIds);
+    }
+
+    @Override
+    @Transactional
+    public List<OrderDetail> findAllByOrderId(Long orderId) {
+        return orderDetailJpaRepository.findAllByOrderId(orderId);
     }
 }

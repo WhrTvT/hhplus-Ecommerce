@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentValidator paymentValidator;
+    private final ProductQuantityUpdater productQuantityUpdater; // 의존성 주입 추가
     private final OrderValidator orderValidator;
 
     @Transactional
@@ -27,6 +28,9 @@ public class PaymentService {
 
         // 잔액 차감
         userWallet.usedAmount(orders.getFinalPrice());
+
+        // 재고 차감
+        productQuantityUpdater.updateProductQuantity(orders.getOrderId());
 
         // 결제 성공
         Payment savedPayment = paymentRepository.save(Payment.builder()
