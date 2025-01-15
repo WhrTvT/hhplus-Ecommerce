@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.common.config;
+package kr.hhplus.be.server.infrastructure.config.queryDSL;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
