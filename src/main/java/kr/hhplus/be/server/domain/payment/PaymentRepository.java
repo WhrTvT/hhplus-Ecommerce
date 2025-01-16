@@ -9,5 +9,7 @@ import java.util.Optional;
 public interface PaymentRepository {
     Optional<UserWallet> findUserWalletWithPaymentByOrderId(long orderId);
 
+    boolean existsByOrderIdAndStatus(long orderId, PaymentStatus status);
+
     Payment save(Payment payment);
 }

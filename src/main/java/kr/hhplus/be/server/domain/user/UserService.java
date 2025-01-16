@@ -12,6 +12,7 @@ public class UserService {
 
     public UserWallet charge(UserWalletChargeCommand userWalletChargeCommand) {
         userValidator.validateOfUserFindById(userWalletChargeCommand.userId());
+        userValidator.validateOfAmountIsRefused(userWalletChargeCommand.chargeAmount());
 
         UserWallet wallet = userValidator.validateOfUserWalletFindByUserId(userWalletChargeCommand.userId());
         wallet.chargeAmount(userWalletChargeCommand.chargeAmount());

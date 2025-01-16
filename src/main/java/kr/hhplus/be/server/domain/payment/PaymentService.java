@@ -20,6 +20,9 @@ public class PaymentService {
 
     @Transactional
     public Payment payment(PaymentCommand paymentCommand) {
+        // 이미 결제된 주문인지 확인
+        paymentValidator.validateOfAlready(paymentCommand.orderId());
+
         // 존재하는 주문인지
         Orders orders = orderValidator.validateOfOrderFindById(paymentCommand.orderId());
 

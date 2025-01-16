@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.order;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kr.hhplus.be.server.domain.coupon.UserCoupon;
 import kr.hhplus.be.server.domain.user.User;
 import lombok.*;
@@ -29,14 +30,14 @@ public class Orders {
     private long userId;
 
     @Column(insertable=false, updatable=false)
-    private long userCouponId;
+    private Long userCouponId;
 
     private BigDecimal couponDiscount;
 
-    @NotBlank
+    @NotNull
     private BigDecimal totalPrice;
 
-    @NotBlank
+    @NotNull
     private BigDecimal finalPrice;
 
     @CreatedDate

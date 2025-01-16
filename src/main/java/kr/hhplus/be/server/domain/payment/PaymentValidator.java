@@ -16,4 +16,12 @@ public class PaymentValidator {
         return paymentRepository.findUserWalletWithPaymentByOrderId(orderId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.PAYMENT_REQUIRED_SERVICE, LogLevel.WARN, "Wallet Is Declined"));
     }
+
+    public Long validateOfAlready(long orderId) {
+        if (paymentRepository.existsByOrderIdAndStatus(orderId, PaymentStatus.SUCCESS)) {
+            throw new CustomException(ExceptionCode.CONFLICT_SERVICE, LogLevel.WARN, "This Order is Already been paid");
+        } else {
+            return orderId;
+        }
+    }
 }

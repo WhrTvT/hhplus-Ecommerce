@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.coupon;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,7 +25,7 @@ public class Coupon {
     @NotBlank
     private String couponName;
 
-    @NotBlank
+    @NotNull
     private BigDecimal discount;
 
     private boolean isPercent;

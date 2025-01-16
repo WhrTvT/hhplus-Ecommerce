@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.product;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,7 +29,7 @@ public class Product {
     @Column(length=256)
     private String detail;
 
-    @NotBlank
+    @NotNull
     private BigDecimal price;
 
     @CreatedDate

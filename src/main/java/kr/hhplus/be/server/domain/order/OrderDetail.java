@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.order;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kr.hhplus.be.server.domain.product.Product;
 import kr.hhplus.be.server.domain.user.User;
 import lombok.*;
@@ -32,10 +33,10 @@ public class OrderDetail {
     @Column(insertable=false, updatable=false)
     private long productId;
 
-    @NotBlank
+    @NotNull
     private long selectQuantity;
 
-    @NotBlank
+    @NotNull
     private BigDecimal unitPrice;
 
     @CreatedDate

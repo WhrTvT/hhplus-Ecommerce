@@ -6,7 +6,7 @@ import java.util.Optional;
 
 @Repository
 public interface OrdersRepository {
-    Optional<Orders> findById(long orderId);
+    Optional<Orders> findByIdWithLock(long orderId);
 
     Orders save(Orders orders);
 

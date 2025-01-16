@@ -3,7 +3,6 @@ package kr.hhplus.be.server.domain.order;
 import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ public class OrderValidator {
     private final OrdersRepository ordersRepository;
 
     public Orders validateOfOrderFindById(long orderId) {
-        return ordersRepository.findById(orderId)
+        return ordersRepository.findByIdWithLock(orderId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "Order not found"));
     }
 

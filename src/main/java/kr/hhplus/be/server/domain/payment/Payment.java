@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.payment;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kr.hhplus.be.server.domain.order.Orders;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -28,14 +29,14 @@ public class Payment {
     private long orderId;
 
     @Column(length=50)
-    @NotBlank
+    @NotNull
     private String method;
 
     @Column(length=50)
-    @NotBlank
+    @NotNull
     private String status;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime paymentAt;
 
     @CreatedDate
