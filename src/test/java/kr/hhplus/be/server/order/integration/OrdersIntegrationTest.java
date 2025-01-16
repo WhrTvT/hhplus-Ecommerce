@@ -1,6 +1,9 @@
-package kr.hhplus.be.server.domain.order;
+package kr.hhplus.be.server.order.integration;
 
-import kr.hhplus.be.server.common.exception.BusinessLogicException;
+import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.domain.order.OrderValidator;
+import kr.hhplus.be.server.domain.order.Orders;
+import kr.hhplus.be.server.domain.order.OrdersRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +19,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-class OrdersTest {
+class OrdersIntegrationTest {
 
     @Mock
     OrdersRepository ordersRepository;
@@ -25,16 +28,16 @@ class OrdersTest {
     OrderValidator orderValidator;
 
     @Test
-    @DisplayName("🔴 주문이 존재하지 않으면 BusinessException 발생")
+    @DisplayName("🔴 주문이 존재하지 않으면 CustomException 발생")
     void testOrderNotFound() {
         // given
-        Mockito.when(ordersRepository.findById(1L)).thenReturn(Optional.empty());
+        Mockito.when(ordersRepository.findByIdWithLock(1L)).thenReturn(Optional.empty());
 
         // when
         // then
         assertThatThrownBy(() -> {
             orderValidator.validateOfOrderFindById(1L);
-        }).isInstanceOf(BusinessLogicException.class).hasMessage("Order Not Found");
+        }).isInstanceOf(CustomException.class).hasMessage("Order Not Found");
     }
 
     @Test
@@ -50,7 +53,7 @@ class OrdersTest {
                 .finalPrice(new BigDecimal("90000"))
                 .build();
 
-        Mockito.when(ordersRepository.findById(1L)).thenReturn(Optional.of(order));
+        Mockito.when(ordersRepository.findByIdWithLock(1L)).thenReturn(Optional.of(order));
 
         // when
         Orders loadOrder = orderValidator.validateOfOrderFindById(1L);
