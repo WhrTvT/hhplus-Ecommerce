@@ -12,7 +12,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductJpaRepository extends JpaRepository<Product, Long> {
-    @Query("SELECT p, ps FROM Product p INNER JOIN ProductStock ps ON p.productId = ps.productId")
+//    @Query("SELECT p.productId, p.name, p.detail, p.price, ps.quantity FROM Product p INNER JOIN ProductStock ps ON p.productId = ps.productId")
+    @Query("SELECT new kr.hhplus.be.server.domain.product.response.ProductWithProductStockDTO(" +
+        "p.productId, p.name, p.detail, p.price, ps.quantity) " +
+        "FROM Product p INNER JOIN ProductStock ps ON p.productId = ps.productId")
     @Lock(LockModeType.PESSIMISTIC_READ)
     Page<ProductWithProductStockDTO> findProductWithStock(Pageable pageable);
 }
