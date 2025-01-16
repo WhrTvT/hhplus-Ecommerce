@@ -34,7 +34,7 @@ class OrdersValidatorTest {
     @DisplayName("🔴 주문이 존재하지 않으면 BusinessException 발생")
     void testOrderNotFound() {
         // given
-        Mockito.when(ordersRepository.findById(1L)).thenReturn(Optional.empty());
+        Mockito.when(ordersRepository.findByIdWithLock(1L)).thenReturn(Optional.empty());
 
         // when
         // then
@@ -56,7 +56,7 @@ class OrdersValidatorTest {
                 .finalPrice(new BigDecimal("90000"))
                 .build();
 
-        Mockito.when(ordersRepository.findById(1L)).thenReturn(Optional.of(order));
+        Mockito.when(ordersRepository.findByIdWithLock(1L)).thenReturn(Optional.of(order));
 
         // when
         Orders loadOrder = orderValidator.validateOfOrderFindById(1L);
