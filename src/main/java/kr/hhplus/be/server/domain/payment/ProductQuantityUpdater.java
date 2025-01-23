@@ -21,9 +21,9 @@ public class ProductQuantityUpdater {
     private final ProductValidator productValidator;
 
     @Transactional
-    public void updateProductQuantity(long orderId) {
+    public boolean updateProductQuantity(long orderId) {
         // 1. 주문 정보 조회
-        List<OrderDetail> selectedOrderDetails = orderDetailRepository.findAllByOrderId(orderId);
+        List<OrderDetail> selectedOrderDetails = orderDetailRepository.findAllByOrderIdWithLock(orderId);
 
         // 2. 주문 제품 상세 조회
         List<OrderDetailDTO> orderDetails = selectedOrderDetails.stream()
@@ -41,7 +41,9 @@ public class ProductQuantityUpdater {
             ProductStock productStock = productValidator.validateOfProductStockFindByProductId(detail.productId());
 
             // 현재 재고 확인 및 차감
-            productValidator.validateOfProductStockQuantity(detail.selectQuantity(), productStock.getQuantity());
+            if(productValidator.validateOfProductStockQuantity(detail.selectQuantity(), productStock.getQuantity())){
+                return false;
+            }
 
             productStock.decrementalQuantity(
                     detail.selectQuantity()
@@ -50,5 +52,7 @@ public class ProductQuantityUpdater {
             // 재고 업데이트 저장
             productStockRepository.save(productStock);
         }
+
+        return true;
     }
 }

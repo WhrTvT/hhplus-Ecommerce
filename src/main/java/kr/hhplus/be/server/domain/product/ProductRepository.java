@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository {
 
-    Page<ProductWithProductStockDTO> findProductWithStock(Pageable pageable);
+    Page<ProductWithProductStockDTO> findProductWithStockLock(Pageable pageable);
 
     Product save(Product product);
 }

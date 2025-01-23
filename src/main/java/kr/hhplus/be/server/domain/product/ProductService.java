@@ -15,7 +15,7 @@ public class ProductService {
     private final ProductCustomRepository productCustomRepository;
 
     public Page<ProductWithProductStockDTO> findProducts(Pageable pageable) {
-        return productRepository.findProductWithStock(pageable);
+        return productRepository.findProductWithStockLock(pageable);
     }
 
     public List<ProductWithProductStockDTO> findTopProducts(long top, long day) {

@@ -7,5 +7,5 @@ import java.util.List;
 @Repository
 public interface OrderDetailRepository {
     List<OrderDetail> findAllByProductIds(List<Long> productIds);
-    List<OrderDetail> findAllByOrderId(Long orderId);
+    List<OrderDetail> findAllByOrderIdWithLock(Long orderId);
 }

@@ -35,7 +35,7 @@ public class UserWallet {
     private LocalDateTime updatedAt;
 
     @OneToOne // 1:1
-    @JoinColumn(name = "userId") // User.walletId 조인
+    @JoinColumn(name = "userId") // User.userId 조인
     private User user;
 
     public void chargeAmount(BigDecimal chargeAmount) {
