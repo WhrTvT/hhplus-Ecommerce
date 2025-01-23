@@ -2,12 +2,10 @@ package kr.hhplus.be.server.infrastructure.payment;
 
 import kr.hhplus.be.server.domain.payment.Payment;
 import kr.hhplus.be.server.domain.payment.PaymentRepository;
-import kr.hhplus.be.server.domain.payment.PaymentStatus;
 import kr.hhplus.be.server.domain.user.UserWallet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Repository
@@ -16,13 +14,19 @@ public class PaymentImplRepository implements PaymentRepository {
 
 
     @Override
-    public Optional<UserWallet> findUserWalletWithPaymentByOrderId(long orderId) {
+    public UserWallet findUserWalletWithPaymentByOrderId(long orderId) {
         return paymentJpaRepository.findUserWalletWithPaymentByOrderId(orderId);
     }
 
     @Override
-    public boolean existsByOrderIdAndStatus(long orderId, PaymentStatus status) {
-        return paymentJpaRepository.existsByOrderIdAndStatus(orderId, status);
+    @Transactional
+    public boolean existsByOrderIdAndStatusWithLock(long orderId, String status) {
+        return paymentJpaRepository.existsByOrderIdAndStatusWithLock(orderId, status);
+    }
+
+    @Override
+    public Payment findByOrderId(long orderId) {
+        return paymentJpaRepository.findByOrderId(orderId);
     }
 
     @Override

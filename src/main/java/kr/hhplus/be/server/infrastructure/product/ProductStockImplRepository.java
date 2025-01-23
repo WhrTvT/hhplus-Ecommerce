@@ -4,6 +4,7 @@ import kr.hhplus.be.server.domain.product.ProductStock;
 import kr.hhplus.be.server.domain.product.ProductStockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +16,12 @@ public class ProductStockImplRepository implements ProductStockRepository {
     @Override
     public Optional<ProductStock> findByProductId(long productId) {
         return productStockJpaRepository.findByProductId(productId);
+    }
+
+    @Override
+    @Transactional
+    public Optional<ProductStock> findByProductIdWithLock(long productId) {
+        return productStockJpaRepository.findByProductIdWithLock(productId);
     }
 
     @Override

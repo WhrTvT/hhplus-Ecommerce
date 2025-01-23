@@ -16,6 +16,6 @@ public interface ProductJpaRepository extends JpaRepository<Product, Long> {
     @Query("SELECT new kr.hhplus.be.server.domain.product.response.ProductWithProductStockDTO(" +
         "p.productId, p.name, p.detail, p.price, ps.quantity) " +
         "FROM Product p INNER JOIN ProductStock ps ON p.productId = ps.productId")
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Page<ProductWithProductStockDTO> findProductWithStock(Pageable pageable);
 }
