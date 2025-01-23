@@ -39,7 +39,7 @@ class ProductValidatorTest {
 
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, sort));
 
-        Mockito.when(productRepository.findProductWithStock(pageable)).thenReturn(Page.empty());
+        Mockito.when(productRepository.findProductWithStockLock(pageable)).thenReturn(Page.empty());
 
         // when
         // then
@@ -67,7 +67,7 @@ class ProductValidatorTest {
         List<ProductWithProductStockDTO> pageContent = products.subList(start, end);
 
         Page<ProductWithProductStockDTO> PageImpl = new PageImpl<>(pageContent, pageable, products.size());
-        Mockito.when(productRepository.findProductWithStock(pageable)).thenReturn(PageImpl);
+        Mockito.when(productRepository.findProductWithStockLock(pageable)).thenReturn(PageImpl);
 
         // when
         Page<ProductWithProductStockDTO> loadProduct = productValidator.validateOfProductFindById(pageable);
