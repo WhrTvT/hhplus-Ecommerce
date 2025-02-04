@@ -54,8 +54,12 @@ public class ProductIntegrationTest extends IntegrationTest {
 
     @BeforeEach
     void init(){
-        productJpaRepository.deleteAllInBatch();
+        orderDetailJpaRepository.deleteAllInBatch();
+        paymentJpaRepository.deleteAllInBatch();
+        ordersJpaRepository.deleteAllInBatch();
+
         productStockJpaRepository.deleteAllInBatch();
+        productJpaRepository.deleteAllInBatch();
     }
 
     @Test

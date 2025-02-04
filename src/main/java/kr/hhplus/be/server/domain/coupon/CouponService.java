@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.coupon;
 
 import kr.hhplus.be.server.application.in.CouponCommand;
 import kr.hhplus.be.server.application.in.CouponIssueCommand;
+import kr.hhplus.be.server.domain.user.User;
 import kr.hhplus.be.server.domain.user.UserRepository;
 import kr.hhplus.be.server.domain.user.UserValidator;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +30,17 @@ public class CouponService {
 
     @Transactional
     public UserCoupon issue(CouponIssueCommand couponIssueCommand) {
+        Coupon coupon = couponValidator.validateOfCouponFindById(couponIssueCommand.userId());
+
+        User user = userValidator.validateOfUserFindById(couponIssueCommand.userId());
+
         UserCoupon issuedCoupon = userCouponRepository.save(UserCoupon.builder()
                 .couponId(couponIssueCommand.couponId())
                 .userId(couponIssueCommand.userId())
                 .status(String.valueOf(UserCouponStatus.UNUSED))
                 .issueAt(couponIssueCommand.issueAt())
+                .coupon(coupon)
+                .user(user)
                 .build());
 
         // 쿠폰량 감소

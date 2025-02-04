@@ -22,7 +22,7 @@ public class Coupon {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long couponId;
 
-    @NotBlank
+    @NotNull
     private String couponName;
 
     @NotNull
@@ -30,7 +30,7 @@ public class Coupon {
 
     private boolean isPercent;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime expiredAt;
 
     @CreatedDate

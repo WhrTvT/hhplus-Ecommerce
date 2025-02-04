@@ -16,7 +16,7 @@ public class ProductImplRepository implements ProductRepository {
 
     @Override
     @Transactional
-    public Page<ProductWithProductStockDTO> findProductWithStock(Pageable pageable) {
+    public Page<ProductWithProductStockDTO> findProductWithStockLock(Pageable pageable) {
         return productJpaRepository.findProductWithStock(pageable);
     }
 

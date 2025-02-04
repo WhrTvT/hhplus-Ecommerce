@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentValidator paymentValidator;
-    private final ProductQuantityUpdater productQuantityUpdater; // 의존성 주입 추가
+    private final ProductQuantityUpdater productQuantityUpdater;
     private final OrderValidator orderValidator;
 
     @Transactional
@@ -33,15 +33,27 @@ public class PaymentService {
         userWallet.usedAmount(orders.getFinalPrice());
 
         // 재고 차감
-        productQuantityUpdater.updateProductQuantity(orders.getOrderId());
+        Payment savedPayment;
 
-        // 결제 성공
-        Payment savedPayment = paymentRepository.save(Payment.builder()
-                .orderId(paymentCommand.orderId())
-                .method(paymentCommand.method())
-                .status(String.valueOf(PaymentStatus.SUCCESS))
-                .paymentAt(paymentCommand.paymentAt())
-                .build());
+        if(productQuantityUpdater.updateProductQuantity(orders.getOrderId())){
+            // 결제 성공
+            savedPayment = paymentRepository.save(Payment.builder()
+                    .orderId(paymentCommand.orderId())
+                    .method(paymentCommand.method())
+                    .status(String.valueOf(PaymentStatus.SUCCESS))
+                    .paymentAt(paymentCommand.paymentAt())
+                    .orders(orders)
+                    .build());
+        } else{
+            // 결제 실패
+            savedPayment = paymentRepository.save(Payment.builder()
+                    .orderId(paymentCommand.orderId())
+                    .method(paymentCommand.method())
+                    .status(String.valueOf(PaymentStatus.FAIL))
+                    .paymentAt(paymentCommand.paymentAt())
+                    .orders(orders)
+                    .build());
+        }
 
         // 통계로그 : 결제 시, 사용한 방법
         log.info("orderId: {}, method: {}, status: {}", orders.getOrderId(), paymentCommand.method(), savedPayment.getStatus());

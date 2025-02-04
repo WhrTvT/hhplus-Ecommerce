@@ -32,8 +32,8 @@ public class UserWalletIntegrationTest extends IntegrationTest {
 
     @BeforeEach
     void init(){
-        userJpaRepository.deleteAllInBatch();
         userWalletJpaRepository.deleteAllInBatch();
+        userJpaRepository.deleteAllInBatch();
     }
 
     @Test

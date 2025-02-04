@@ -31,13 +31,13 @@ class PaymentValidatorTest {
     @DisplayName("🔴 결제에 필요한 지갑 정보가 존재하지 않으면 BusinessException 발생")
     void testUserWalletWithPaymentNotFound() {
         // given
-        Mockito.when(paymentRepository.findUserWalletWithPaymentByOrderId(1L)).thenReturn(Optional.empty());
+        Mockito.when(paymentRepository.findUserWalletWithPaymentByOrderId(1L)).thenReturn(null);
 
         // when
         // then
         assertThatThrownBy(() -> {
             paymentValidator.validateOfFindUserWalletWithPaymentByOrderId(1L);
-        }).isInstanceOf(CustomException.class).hasMessage("Wallet Is Declined");
+        }).isInstanceOf(CustomException.class).hasMessage("Payment Required");
     }
 
     @Test
@@ -45,7 +45,7 @@ class PaymentValidatorTest {
     void testUserWalletWithPaymentFound() {
         // given
         UserWallet userWallet = UserWallet.builder().walletId(1L).userId(1L).currentAmount(new BigDecimal(100000)).build();
-        Mockito.when(paymentRepository.findUserWalletWithPaymentByOrderId(1L)).thenReturn(Optional.of(userWallet));
+        Mockito.when(paymentRepository.findUserWalletWithPaymentByOrderId(1L)).thenReturn(userWallet);
 
         // when
         UserWallet wallet = paymentValidator.validateOfFindUserWalletWithPaymentByOrderId(1L);

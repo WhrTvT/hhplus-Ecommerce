@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.coupon;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kr.hhplus.be.server.domain.user.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -30,10 +31,10 @@ public class UserCoupon {
     private long couponId;
 
     @Column(length=50)
-    @NotBlank
+    @NotNull
     private String status;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime issueAt;
 
     @CreatedDate

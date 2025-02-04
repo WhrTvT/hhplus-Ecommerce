@@ -21,7 +21,7 @@ public class OrderDetailImplRepository implements OrderDetailRepository {
 
     @Override
     @Transactional
-    public List<OrderDetail> findAllByOrderId(Long orderId) {
+    public List<OrderDetail> findAllByOrderIdWithLock(Long orderId) {
         return orderDetailJpaRepository.findAllByOrderId(orderId);
     }
 }

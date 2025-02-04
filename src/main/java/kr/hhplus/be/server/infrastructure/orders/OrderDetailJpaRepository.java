@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface OrderDetailJpaRepository extends JpaRepository<OrderDetail, Long> {
     @Query("SELECT detail FROM OrderDetail detail WHERE detail.orderId = ?1")
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<OrderDetail> findAllByOrderId(long orderId);
 }

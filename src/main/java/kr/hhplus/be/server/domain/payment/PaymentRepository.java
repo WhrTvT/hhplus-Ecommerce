@@ -3,13 +3,13 @@ package kr.hhplus.be.server.domain.payment;
 import kr.hhplus.be.server.domain.user.UserWallet;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface PaymentRepository {
-    Optional<UserWallet> findUserWalletWithPaymentByOrderId(long orderId);
+    UserWallet findUserWalletWithPaymentByOrderId(long orderId);
 
-    boolean existsByOrderIdAndStatus(long orderId, PaymentStatus status);
+    boolean existsByOrderIdAndStatusWithLock(long orderId, String status);
+
+    Payment findByOrderId(long orderId);
 
     Payment save(Payment payment);
 }
