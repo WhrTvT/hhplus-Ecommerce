@@ -119,9 +119,10 @@ public class CouponConcurrencyTest extends IntegrationTest {
         couponQuantityJpaRepository.save(CouponQuantity.builder().couponId(coupon.getCouponId()).quantity(5).coupon(coupon).build());
 
         // when
-        UserCoupon userCoupon = couponService.issue(CouponIssueCommand.of(coupon.getCouponId(), user.getUserId(), LocalDateTime.now()));
+//        UserCoupon userCoupon = couponService.issue(CouponIssueCommand.of(coupon.getCouponId(), user.getUserId(), LocalDateTime.now()));
+        Boolean userCoupon = couponService.issue(CouponIssueCommand.of(coupon.getCouponId(), user.getUserId(), LocalDateTime.now()));
 
         // then
-        assertThat(userCoupon.getCouponId()).isEqualTo(coupon.getCouponId());
+        assertThat(userCoupon).isEqualTo(true);
     }
 }
