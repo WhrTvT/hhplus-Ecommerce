@@ -2,6 +2,7 @@ package kr.hhplus.be.server.domain.coupon;
 
 import kr.hhplus.be.server.common.exception.CustomException;
 import kr.hhplus.be.server.common.exception.ExceptionCode;
+import kr.hhplus.be.server.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Component;
@@ -31,5 +32,10 @@ public class CouponValidator {
         if(quantity <= 0){
             throw new CustomException(ExceptionCode.CONFLICT_SERVICE, LogLevel.WARN, "Coupon Max Issued");
         }
+    }
+
+    public void validateOfDuplicateIssueCoupon(User user, Coupon coupon){
+        userCouponRepository.findByUserIdAndCouponId(user.getUserId(), coupon.getCouponId())
+                .orElseThrow(() -> new CustomException(ExceptionCode.CONFLICT_SERVICE, LogLevel.WARN, "Duplicate coupon issued"));
     }
 }

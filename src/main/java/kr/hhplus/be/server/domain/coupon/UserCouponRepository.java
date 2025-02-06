@@ -13,5 +13,7 @@ public interface UserCouponRepository {
 
     Page<UserCoupon> findByUserId(long userId, Pageable pageable);
 
+    Optional<UserCoupon> findByUserIdAndCouponId(long userId, long couponId);
+
     UserCoupon save(UserCoupon userCoupon);
 }
