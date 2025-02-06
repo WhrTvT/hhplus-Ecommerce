@@ -51,6 +51,9 @@ dependencies {
 	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
+	//redis
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
 	// DB
 	runtimeOnly("com.mysql:mysql-connector-j")
 

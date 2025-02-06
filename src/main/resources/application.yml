@@ -40,3 +40,12 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+---
+spring:
+  profiles:
+    include: redis
+  data:
+    redis:
+      host: localhost
+      password: application
+      port: 6379
