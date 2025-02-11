@@ -23,4 +23,8 @@ public record CouponIssueResponse(
                 couponInfo.issueAt()
         );
     }
+
+    public static Boolean fromT(Boolean couponInfo){
+        return true;
+    }
 }

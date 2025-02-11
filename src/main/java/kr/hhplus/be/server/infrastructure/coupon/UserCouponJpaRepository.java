@@ -11,4 +11,6 @@ import java.util.Optional;
 @Repository
 public interface UserCouponJpaRepository extends JpaRepository<UserCoupon, Long> {
     Page<UserCoupon> findByUserId(long userId, Pageable pageable);
+
+    Optional<UserCoupon> findByUserIdAndCouponId(long userId, long couponId);
 }

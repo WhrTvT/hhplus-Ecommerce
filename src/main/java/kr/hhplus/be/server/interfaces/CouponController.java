@@ -29,12 +29,14 @@ public class CouponController {
     @Operation(summary = "쿠폰 발급", description = "Body로 받은 사용자 정보로 쿠폰을 발급합니다.")
     @Parameter(name = "couponIssuedRequest", description = "쿠폰 발급 Req 정보")
     @PatchMapping("/coupon")
-    public ApiResponse<CouponIssueResponse> CouponIssue(
+//    public ApiResponse<CouponIssueResponse> CouponIssue(
+    public ApiResponse<Boolean> CouponIssue(
             @Valid @RequestBody CouponIssueRequest couponIssueRequest
     ) {
-        CouponInfo couponInfo = couponUseCase.couponIssue(couponIssueRequest.couponId(), couponIssueRequest.userId(), couponIssueRequest.issueAt());
-        return ApiResponse.success(CouponIssueResponse.from(couponInfo));
-
+//        CouponInfo couponInfo = couponUseCase.couponIssue(couponIssueRequest.couponId(), couponIssueRequest.userId(), couponIssueRequest.issueAt());
+        Boolean couponInfo = couponUseCase.couponIssue(couponIssueRequest.couponId(), couponIssueRequest.userId(), couponIssueRequest.issueAt());
+//        return ApiResponse.success(CouponIssueResponse.from(couponInfo));
+        return ApiResponse.success(CouponIssueResponse.fromT(couponInfo));
     }
 
     // 쿠폰 조회

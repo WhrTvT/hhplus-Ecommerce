@@ -18,11 +18,13 @@ import java.time.LocalDateTime;
 public class CouponUseCase {
     private final CouponService couponService;
 
-    public CouponInfo couponIssue(long couponId, long userId, LocalDateTime issueAt) {
+//    public CouponInfo couponIssue(long couponId, long userId, LocalDateTime issueAt) {
+    public Boolean couponIssue(long couponId, long userId, LocalDateTime issueAt) {
         Coupon coupon = couponService.getCoupon(CouponCommand.of(couponId, userId));
-        UserCoupon userCoupon = couponService.issue(CouponIssueCommand.of(coupon.getCouponId(), userId, issueAt));
+        Boolean userCoupon = couponService.issue(CouponIssueCommand.of(coupon.getCouponId(), userId, issueAt));
 
-        return CouponInfo.from(userCoupon);
+//        return CouponInfo.from(userCoupon);
+        return userCoupon;
     }
 
     public Page<CouponInfo> getUserCoupons(long userId, Pageable pageable) {

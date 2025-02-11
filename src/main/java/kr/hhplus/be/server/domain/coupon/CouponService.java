@@ -17,6 +17,7 @@ public class CouponService {
     private final UserCouponRepository userCouponRepository;
     private final CouponValidator couponValidator;
     private final UserValidator userValidator;
+    private final CouponScheduler couponScheduler;
 
     public Coupon getCoupon(CouponCommand couponCommand) {
         couponValidator.validateOfUserCouponFindById(couponCommand.userId());
@@ -29,23 +30,17 @@ public class CouponService {
     }
 
     @Transactional
-    public UserCoupon issue(CouponIssueCommand couponIssueCommand) {
+    public Boolean issue(CouponIssueCommand couponIssueCommand) {
+//    public UserCoupon issue(CouponIssueCommand couponIssueCommand) {
         Coupon coupon = couponValidator.validateOfCouponFindById(couponIssueCommand.userId());
 
         User user = userValidator.validateOfUserFindById(couponIssueCommand.userId());
 
-        UserCoupon issuedCoupon = userCouponRepository.save(UserCoupon.builder()
-                .couponId(couponIssueCommand.couponId())
-                .userId(couponIssueCommand.userId())
-                .status(String.valueOf(UserCouponStatus.UNUSED))
-                .issueAt(couponIssueCommand.issueAt())
-                .coupon(coupon)
-                .user(user)
-                .build());
+        // 중복 발급 여부 확인
+        couponValidator.validateOfDuplicateIssueCoupon(user, coupon);
 
-        // 쿠폰량 감소
-        CouponQuantity couponQuantity = new CouponQuantity();
-        couponQuantity.couponIssued();
+        // 대기열 처리
+        Boolean issuedCoupon = couponScheduler.addQueue(user, coupon);
 
         return issuedCoupon;
     }
