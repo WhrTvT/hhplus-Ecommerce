@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class DataPlatformService {
+public class DataPlatformServiceMock {
     public String sendPaymentToMockPlatform(PaymentInfo paymentInfo) {
         log.info("sendPaymentToMockPlatform : {}", paymentInfo);
 

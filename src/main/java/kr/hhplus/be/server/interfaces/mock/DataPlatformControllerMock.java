@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.interfaces;
+package kr.hhplus.be.server.interfaces.mock;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mock")
 @RequiredArgsConstructor
 @Slf4j
-public class DataPlatformMockController {
+public class DataPlatformControllerMock {
 
     @Operation(summary = "데이터플랫폼 Mock", description = "결제 이후, 데이터플랫폼으로 데이터를 전송합니다.")
     @Parameter(name = "couponIssuedRequest", description = "쿠폰 발급 Req 정보")
