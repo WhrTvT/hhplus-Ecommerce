@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -27,14 +29,15 @@ public class PaymentService {
         Orders orders = orderValidator.validateOfOrderFindById(paymentCommand.orderId());
 
         // 잔액이 충분한지
-        UserWallet userWallet = paymentValidator.validateOfFindUserWalletWithPaymentByOrderId(paymentCommand.orderId());
+        UserWallet userWallet = paymentValidator.validateOfUserWalletFindByUserId(orders.getUserId());
 
         // 잔액 차감
         userWallet.usedAmount(orders.getFinalPrice());
 
-        // 재고 차감
+        // 결제 객체 생성
         Payment savedPayment;
 
+        // 재고 차감 성공/실패
         if(productQuantityUpdater.updateProductQuantity(orders.getOrderId())){
             // 결제 성공
             savedPayment = paymentRepository.save(Payment.builder()

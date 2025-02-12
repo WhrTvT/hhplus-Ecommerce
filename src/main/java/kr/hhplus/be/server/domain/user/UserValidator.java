@@ -20,7 +20,7 @@ public class UserValidator {
     }
 
     public UserWallet validateOfUserWalletFindByUserId(long userId) {
-        return userWalletRepository.findByUserId(userId)
+        return userWalletRepository.findByUserIdWithLock(userId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.NOT_FOUND_SERVICE, LogLevel.WARN, "Wallet not found"));
     }
 

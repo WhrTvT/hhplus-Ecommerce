@@ -3,9 +3,9 @@ package kr.hhplus.be.server.domain.coupon;
 import kr.hhplus.be.server.application.in.CouponCommand;
 import kr.hhplus.be.server.application.in.CouponIssueCommand;
 import kr.hhplus.be.server.domain.user.User;
-import kr.hhplus.be.server.domain.user.UserRepository;
 import kr.hhplus.be.server.domain.user.UserValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,15 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CouponService {
     private final UserCouponRepository userCouponRepository;
     private final CouponValidator couponValidator;
     private final UserValidator userValidator;
-    private final CouponScheduler couponScheduler;
+    private final CouponIssuer couponIssuer;
 
     public Coupon getCoupon(CouponCommand couponCommand) {
-        couponValidator.validateOfUserCouponFindById(couponCommand.userId());
-
         Coupon coupon = couponValidator.validateOfCouponFindById(couponCommand.couponId());
         CouponQuantity couponQuantity = couponValidator.validateOfFindCouponQuantityById(coupon.getCouponId());
         couponValidator.validateOfQuantityIsZERO(couponQuantity.getQuantity());
@@ -32,7 +31,7 @@ public class CouponService {
     @Transactional
     public Boolean issue(CouponIssueCommand couponIssueCommand) {
 //    public UserCoupon issue(CouponIssueCommand couponIssueCommand) {
-        Coupon coupon = couponValidator.validateOfCouponFindById(couponIssueCommand.userId());
+        Coupon coupon = couponValidator.validateOfCouponFindById(couponIssueCommand.couponId());
 
         User user = userValidator.validateOfUserFindById(couponIssueCommand.userId());
 
@@ -40,14 +39,14 @@ public class CouponService {
         couponValidator.validateOfDuplicateIssueCoupon(user, coupon);
 
         // 대기열 처리
-        Boolean issuedCoupon = couponScheduler.addQueue(user, coupon);
+        Boolean issuedCoupon = couponIssuer.addQueue(user, coupon);
 
         return issuedCoupon;
     }
 
-    public Page<UserCoupon> getUserCoupon(long userId, Pageable pageable) {
+    public Page<UserCoupon> getUserCoupons(long userId, Pageable pageable) {
         userValidator.validateOfUserFindById(userId);
 
-        return userCouponRepository.findByUserId(userId, pageable);
+        return userCouponRepository.findAllByUserId(userId, pageable);
     }
 }
