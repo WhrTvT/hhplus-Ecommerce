@@ -104,33 +104,30 @@
     - 인덱스 설정 여부 : O
     - 성능 개선 : 여러 테이블의 JOIN으로 인해 Payment(결제) 테이블이 풀 스캔되고 있으므로, 작업 필요.
     - 쿼리 구문 :
-       ```shell
-       select p.product_id,p.name,p.detail,p.price,sum(od.select_quantity) 
-       from product p
-       join product_stock ps on p.product_id=ps.product_id
-       join order_detail od on p.product_id=od.product_id
-       join orders o on od.order_id=o.order_id
-       join payment p2 on o.order_id=p2.order_id
-       where
-             p2.status='SUCCESS'
-             and p2.payment_at>='2025-02-01'
-             and ps.quantity is not null
-       group by p.product_id
-       order by sum(od.select_quantity) DESC
-       limit 5;
-       ```
+       ![4](https://github.com/user-attachments/assets/e985ce8f-5ee3-472b-a51f-c05d3d2d5d6d)
+
     - 인덱싱 전
       - Explain
         - type: ALL
         - rows: 99,704
         - Extra: `Using where; Using temporary; Using filesort`
+          ![4-explain](https://github.com/user-attachments/assets/d5dd6fdb-7c22-4583-8c5b-9260b98d9b06)
+          - `Using where`: MySQL 서버가 스토리지 엔진에서 값을 가져온 뒤 행을 필터링 한다는 것을 의미
+          - `Using temporary`: MySQL이 쿼리 결과를 정렬하기 위해 임시 테이블을 사용한다는 의미
+          - `Using filesort`: MySQL이 결과의 순서를 맞추기 위해 인덱스 순서로 테이블을 읽는 것이아니라 외부 정렬을 사용해야 한다는 것을 의미
     - 인덱싱 후
       - Explain
         - type: range
         - rows: 144
         - Extra: `Using where; Using Index; Using temporary; Using filesort`
+          ![44-explain](https://github.com/user-attachments/assets/1c9e6a56-e84a-4d0e-8358-5144f2fcf377)
+          - `Using Index`: 커버링 인덱스를 사용 중
+          - 여전히 행 필터링과 쿼리 결과 정렬을 위해 Extra에 표기되지만, 커버링 인덱스 사용이 추가되었음.
+
     - 성능 검증
       - 동일쿼리의 실행 속도가 0.37sec → 0.27sec로, 0.1sec 개선
+        ![44](https://github.com/user-attachments/assets/0a417626-ac31-495c-b857-88c6683e9163)
+
     - 개선 방향
         - Payment 테이블에 복합 컬럼 인덱스(status, payment_at, order_id)를 추가함.
         <br>이유: 조건에서 사용하는 컬럼(status, payment_at)과 JOIN에서 사용하는 컬럼(order_id)을 한 인덱스로 묶어서, 조인할 때 커버링 인덱스를 활용하도록 하기 위함.
@@ -138,8 +135,11 @@
     - 인덱스 설정 여부 : X
     - 성능 개선 : LIMIT을 통한 페이징 처리를 하고 있으나, Count(상품 전체 개수) 쿼리에서 JOIN으로 인해 Product 테이블이 풀 스캔이 되기 때문에 작업이 고려됨.
                  하지만, JPA에서 생성된 쿼리인 점과 이미 커버링 인덱스를 사용 중인 점을 확인하여 작업 진행하지 않음.
-    - 쿼리 구문 : `select count(p.product_id) from product p join product_stock ps on p.product_id=ps.product_id;`
+    - 쿼리 구문 :
+      ![5-2](https://github.com/user-attachments/assets/ff44be32-a6da-4249-b9e1-53341f789ea3)
+
     - Explain
       - type: index
       - rows: 99,498
       - Extra: `Using Index` - 커버링 인덱스를 사용 중.
+        ![5-2-explain](https://github.com/user-attachments/assets/3724595b-c76e-4616-a837-6ccb35220649)
