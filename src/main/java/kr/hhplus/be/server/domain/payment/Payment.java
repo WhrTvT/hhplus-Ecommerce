@@ -19,6 +19,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "payment", indexes = {
+        @Index(name = "idx_status_paymentAt_orderId", columnList = "status, paymentAt, orderId")
+})
 public class Payment {
 
     @Id
