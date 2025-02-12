@@ -15,7 +15,7 @@ public class UserWalletImplRepository implements UserWalletRepository {
 
     @Override
     @Transactional
-    public Optional<UserWallet> findByUserId(long userId) {
+    public Optional<UserWallet> findByUserIdWithLock(long userId) {
         return userWalletJpaRepository.findByUserIdWithLock(userId);
     }
 
