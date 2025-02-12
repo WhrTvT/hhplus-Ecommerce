@@ -44,7 +44,7 @@ public class CouponController {
     @Parameter(name = "walletId", description = "조회할 유저의 ID")
     @GetMapping("/mycoupon/{userId}")
     public ApiResponse<Page<CouponResponse>> UserCoupon(
-            @PathVariable Long userId,
+            @PathVariable("userId") Long userId,
             Pageable pageable
     ) {
         Page<CouponInfo> couponInfo = couponUseCase.getUserCoupons(userId, pageable);

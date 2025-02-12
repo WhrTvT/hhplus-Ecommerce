@@ -41,7 +41,7 @@ public class UserController {
     @Parameter(name = "walletId", description = "유저ID")
     @GetMapping("/wallet/{userId}")
     public ApiResponse<UserWalletResponse> userWallet(
-            @PathVariable Long userId
+            @PathVariable("userId") Long userId
     ) {
         UserWalletInfo userWalletInfo = userUseCase.userWallet(userId);
         return ApiResponse.success(UserWalletResponse.from(userWalletInfo));
