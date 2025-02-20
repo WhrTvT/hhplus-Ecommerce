@@ -3,7 +3,7 @@ package kr.hhplus.be.server.interfaces.mock;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.hhplus.be.server.common.exception.ApiResponse;
+import kr.hhplus.be.server.interfaces.support.log.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
