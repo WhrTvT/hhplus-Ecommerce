@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.order.integration;
 
-import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.order.OrderValidator;
 import kr.hhplus.be.server.domain.order.Orders;
 import kr.hhplus.be.server.domain.order.OrdersRepository;
