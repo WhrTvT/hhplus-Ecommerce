@@ -5,13 +5,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.hhplus.be.server.application.ProductUseCase;
 import kr.hhplus.be.server.application.out.ProductInfo;
-import kr.hhplus.be.server.common.exception.ApiResponse;
+import kr.hhplus.be.server.interfaces.support.log.ApiResponse;
 import kr.hhplus.be.server.interfaces.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

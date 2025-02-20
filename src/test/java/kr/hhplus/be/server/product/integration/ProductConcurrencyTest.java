@@ -2,7 +2,7 @@ package kr.hhplus.be.server.product.integration;
 
 import kr.hhplus.be.server.application.in.PaymentCommand;
 import kr.hhplus.be.server.common.IntegrationTest;
-import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.order.OrderDetail;
 import kr.hhplus.be.server.domain.order.Orders;
 import kr.hhplus.be.server.domain.payment.Payment;

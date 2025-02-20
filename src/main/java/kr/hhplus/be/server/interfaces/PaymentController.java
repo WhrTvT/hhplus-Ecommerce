@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kr.hhplus.be.server.application.PaymentUseCase;
 import kr.hhplus.be.server.application.out.PaymentInfo;
-import kr.hhplus.be.server.common.exception.ApiResponse;
-import kr.hhplus.be.server.interfaces.mock.DataPlatformServiceMock;
+import kr.hhplus.be.server.interfaces.support.log.ApiResponse;
+import kr.hhplus.be.server.domain.dataPlatform.DataPlatformService;
 import kr.hhplus.be.server.interfaces.request.PaymentRequest;
 import kr.hhplus.be.server.interfaces.response.PaymentResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PaymentController {
     private final PaymentUseCase paymentUseCase;
-    private final DataPlatformServiceMock dataPlatformServiceMock;
+    private final DataPlatformService dataPlatformService;
 
     // 주문 결제
     @Operation(summary = "주문 결제", description = "Body로 받은 결제 정보로 결제 내역을 생성합니다.")
@@ -36,7 +36,7 @@ public class PaymentController {
         PaymentInfo paymentInfo = paymentUseCase.doPayment(paymentRequest.orderId(), paymentRequest.method(), paymentRequest.paymentAt());
 
         // Mock API로 데이터 전송
-        String dataPlatformResponse = dataPlatformServiceMock.sendPaymentToMockPlatform(paymentInfo);
+        String dataPlatformResponse = dataPlatformService.sendPaymentToMockPlatform(paymentInfo);
         log.info("DataPlatform Mock API Response: {}", dataPlatformResponse);
 
         return ApiResponse.success(PaymentResponse.from(paymentInfo));

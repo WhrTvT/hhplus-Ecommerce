@@ -1,10 +1,8 @@
 package kr.hhplus.be.server.user.integration;
 
-import kr.hhplus.be.server.application.in.PaymentCommand;
 import kr.hhplus.be.server.application.in.UserWalletChargeCommand;
 import kr.hhplus.be.server.common.IntegrationTest;
-import kr.hhplus.be.server.common.exception.CustomException;
-import kr.hhplus.be.server.domain.payment.PaymentMethod;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.user.User;
 import kr.hhplus.be.server.domain.user.UserService;
 import kr.hhplus.be.server.domain.user.UserWallet;
@@ -16,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

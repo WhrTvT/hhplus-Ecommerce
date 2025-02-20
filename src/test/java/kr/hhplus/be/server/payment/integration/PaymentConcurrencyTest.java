@@ -3,7 +3,7 @@ package kr.hhplus.be.server.payment.integration;
 import kr.hhplus.be.server.application.in.PaymentCommand;
 import kr.hhplus.be.server.application.out.PaymentInfo;
 import kr.hhplus.be.server.common.IntegrationTest;
-import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.order.OrderDetail;
 import kr.hhplus.be.server.domain.order.Orders;
 import kr.hhplus.be.server.domain.payment.Payment;
@@ -21,7 +21,7 @@ import kr.hhplus.be.server.infrastructure.product.ProductJpaRepository;
 import kr.hhplus.be.server.infrastructure.product.ProductStockJpaRepository;
 import kr.hhplus.be.server.infrastructure.user.UserJpaRepository;
 import kr.hhplus.be.server.infrastructure.user.UserWalletJpaRepository;
-import kr.hhplus.be.server.interfaces.mock.DataPlatformServiceMock;
+import kr.hhplus.be.server.domain.dataPlatform.DataPlatformService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -63,7 +63,7 @@ class PaymentConcurrencyTest extends IntegrationTest {
     private PaymentService paymentService;
 
     @Autowired
-    private DataPlatformServiceMock dataPlatformServiceMock;
+    private DataPlatformService dataPlatformService;
 
     @BeforeEach
     void init(){
@@ -267,7 +267,7 @@ class PaymentConcurrencyTest extends IntegrationTest {
 
         // when
         PaymentInfo paymentInfo = PaymentInfo.from(payment);
-        String dataPlatformResponse = dataPlatformServiceMock.sendPaymentToMockPlatform(paymentInfo);
+        String dataPlatformResponse = dataPlatformService.sendPaymentToMockPlatform(paymentInfo);
 
         // then
         assertThat(dataPlatformResponse).isNotEmpty();

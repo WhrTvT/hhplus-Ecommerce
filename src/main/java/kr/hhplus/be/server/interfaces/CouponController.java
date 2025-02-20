@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kr.hhplus.be.server.application.CouponUseCase;
 import kr.hhplus.be.server.application.out.CouponInfo;
-import kr.hhplus.be.server.common.exception.ApiResponse;
+import kr.hhplus.be.server.interfaces.support.log.ApiResponse;
 import kr.hhplus.be.server.interfaces.request.CouponIssueRequest;
 import kr.hhplus.be.server.interfaces.response.CouponIssueResponse;
 import kr.hhplus.be.server.interfaces.response.CouponResponse;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Coupon API", description = "쿠폰 발급과 쿠폰 조회를 관리합니다.")

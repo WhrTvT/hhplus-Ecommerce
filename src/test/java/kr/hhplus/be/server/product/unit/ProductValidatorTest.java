@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.product.unit;
 
-import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.product.ProductRepository;
 import kr.hhplus.be.server.domain.product.ProductValidator;
 import kr.hhplus.be.server.domain.product.response.ProductWithProductStockDTO;
