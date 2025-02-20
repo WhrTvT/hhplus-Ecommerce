@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+// TODO - 대기열 처리 부분을 사용하도록 기존 로직 수정(현재는 그냥 비관락 사용중)
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CouponScheduler {
+public class CouponIssuer {
     private final UserRepository userRepository;
     private final CouponValidator couponValidator;
     private final UserCouponRepository userCouponRepository;

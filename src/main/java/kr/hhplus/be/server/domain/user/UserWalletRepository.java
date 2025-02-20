@@ -7,7 +7,7 @@ import java.util.Optional;
 @Repository
 public interface UserWalletRepository {
 
-    Optional<UserWallet> findByUserId(long userId);
+    Optional<UserWallet> findByUserIdWithLock(long userId);
 
     UserWallet save(UserWallet userWallet);
 }

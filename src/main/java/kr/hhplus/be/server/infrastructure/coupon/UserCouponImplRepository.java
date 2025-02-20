@@ -20,7 +20,7 @@ public class UserCouponImplRepository implements UserCouponRepository {
     }
 
     @Override
-    public Page<UserCoupon> findByUserId(long userId, Pageable pageable) {
+    public Page<UserCoupon> findAllByUserId(long userId, Pageable pageable) {
         return userCouponJpaRepository.findByUserId(userId, pageable);
     }
 

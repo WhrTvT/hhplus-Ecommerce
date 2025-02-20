@@ -6,7 +6,7 @@ import kr.hhplus.be.server.domain.payment.Payment;
 import kr.hhplus.be.server.domain.payment.PaymentMethod;
 import kr.hhplus.be.server.domain.payment.PaymentStatus;
 import kr.hhplus.be.server.infrastructure.payment.PaymentJpaRepository;
-import kr.hhplus.be.server.interfaces.mock.DataPlatformService;
+import kr.hhplus.be.server.interfaces.mock.DataPlatformServiceMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class DataPlatformTest extends IntegrationTest {
     private PaymentJpaRepository paymentJpaRepository;
 
     @Autowired
-    private DataPlatformService dataPlatformService;
+    private DataPlatformServiceMock dataPlatformServiceMock;
 
     @BeforeEach
     void init(){
@@ -44,7 +44,7 @@ class DataPlatformTest extends IntegrationTest {
 
         // when
         PaymentInfo paymentInfo = PaymentInfo.from(payment);
-        String dataPlatformResponse = dataPlatformService.sendPaymentToMockPlatform(paymentInfo);
+        String dataPlatformResponse = dataPlatformServiceMock.sendPaymentToMockPlatform(paymentInfo);
 
         // then
         assertThat(dataPlatformResponse).isNotEmpty();

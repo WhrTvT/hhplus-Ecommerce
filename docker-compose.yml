@@ -1,17 +1,63 @@
 version: '3'
 services:
-  mysql:
+  local-mysql:
     image: mysql:8.0
+    container_name: local-mysql
+    restart: always
+    command: # 명령어 실행 한글 깨짐 방지
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --sql-mode=NO_AUTO_VALUE_ON_ZERO,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
     ports:
-      - "3306:3306"
+      - "13306:3306" # 호스트 : 컨테이너
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=application
-      - MYSQL_PASSWORD=application
-      - MYSQL_DATABASE=hhplus
+      MYSQL_ROOT_PASSWORD: root # 초기 암호
+      MYSQL_USER: application #초기 유저
+      MYSQL_PASSWORD: application # 암호 설정
+      MYSQL_DATABASE: hhplus # 사용 DB
+      TZ: Asia/Seoul # TimeZone
     volumes:
-      - ./data/mysql/:/var/lib/mysql
+      - type: bind
+        source: D:\study\server-java\data\mysql8 # OS 환경에 따라 경로 설정 변경
+        target: /var/lib/mysql
 
+  local-mysql-2:
+    image: mysql:8.0
+    container_name: local-mysql-2
+    restart: always
+    command: # 명령어 실행 한글 깨짐 방지
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --sql-mode=NO_AUTO_VALUE_ON_ZERO,STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
+    ports:
+      - "13307:3306" # 호스트 : 컨테이너
+    environment:
+      MYSQL_ROOT_PASSWORD: root # 초기 암호
+      MYSQL_USER: application #초기 유저
+      MYSQL_PASSWORD: application # 암호 설정
+      MYSQL_DATABASE: hhplus # 사용 DB
+      TZ: Asia/Seoul # TimeZone
+    volumes:
+      - type: bind
+        source: D:\study\server-java\data\mysql8-2 # OS 환경에 따라 경로 설정 변경
+        target: /var/lib/mysql
+
+  local-redis:
+    image: redis:latest
+    container_name: local-redis
+    restart: always
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
+    ports:
+      - "16379:6379"
+    environment:
+      REDIS_PASSWORD: application
+    volumes:
+      - type: bind
+        source: D:\study\server-java\data\redis\redis.conf # OS 환경에 따라 경로 설정 변경
+        target: /var/lib/redis
 networks:
   default:
     driver: bridge

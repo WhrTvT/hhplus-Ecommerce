@@ -28,7 +28,7 @@ public class CouponUseCase {
     }
 
     public Page<CouponInfo> getUserCoupons(long userId, Pageable pageable) {
-        Page<UserCoupon> userCoupons = couponService.getUserCoupon(userId, pageable);
+        Page<UserCoupon> userCoupons = couponService.getUserCoupons(userId, pageable);
 
         return userCoupons.map(CouponInfo::from);
     }
