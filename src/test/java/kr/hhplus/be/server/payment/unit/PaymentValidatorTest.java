@@ -1,7 +1,6 @@
 package kr.hhplus.be.server.payment.unit;
 
-import kr.hhplus.be.server.common.exception.CustomException;
-import kr.hhplus.be.server.domain.payment.PaymentRepository;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.payment.PaymentValidator;
 import kr.hhplus.be.server.domain.user.UserWallet;
 import kr.hhplus.be.server.domain.user.UserWalletRepository;

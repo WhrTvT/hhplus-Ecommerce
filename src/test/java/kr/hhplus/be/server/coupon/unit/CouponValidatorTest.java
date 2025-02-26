@@ -1,7 +1,7 @@
 package kr.hhplus.be.server.coupon.unit;
 
-import kr.hhplus.be.server.common.exception.CustomException;
-import kr.hhplus.be.server.common.exception.ExceptionCode;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.ExceptionCode;
 import kr.hhplus.be.server.domain.coupon.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

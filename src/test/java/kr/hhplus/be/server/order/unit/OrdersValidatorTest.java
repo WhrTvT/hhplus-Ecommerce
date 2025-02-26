@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.order.unit;
 
-import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.order.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

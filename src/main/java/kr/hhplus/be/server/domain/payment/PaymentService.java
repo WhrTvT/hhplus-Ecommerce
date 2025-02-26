@@ -3,13 +3,14 @@ package kr.hhplus.be.server.domain.payment;
 import kr.hhplus.be.server.application.in.PaymentCommand;
 import kr.hhplus.be.server.domain.order.OrderValidator;
 import kr.hhplus.be.server.domain.order.Orders;
+import kr.hhplus.be.server.domain.payment.event.PaymentEventPublisher;
+import kr.hhplus.be.server.domain.payment.event.PaymentSuccessEvent;
 import kr.hhplus.be.server.domain.user.UserWallet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,8 @@ public class PaymentService {
     private final PaymentValidator paymentValidator;
     private final ProductQuantityUpdater productQuantityUpdater;
     private final OrderValidator orderValidator;
+
+    private final PaymentEventPublisher paymentEventPublisher;
 
     @Transactional
     public Payment payment(PaymentCommand paymentCommand) {
@@ -57,6 +60,9 @@ public class PaymentService {
                     .orders(orders)
                     .build());
         }
+
+        // 데이터플랫폼 mockAPI 호출 - kafka
+        paymentEventPublisher.paymentSuccess(PaymentSuccessEvent.create(String.valueOf(savedPayment)));
 
         // 통계로그 : 결제 시, 사용한 방법
         log.info("orderId: {}, method: {}, status: {}", orders.getOrderId(), paymentCommand.method(), savedPayment.getStatus());

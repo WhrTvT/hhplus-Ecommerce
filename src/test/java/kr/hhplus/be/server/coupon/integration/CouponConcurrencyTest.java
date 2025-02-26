@@ -1,20 +1,12 @@
 package kr.hhplus.be.server.coupon.integration;
 
 import kr.hhplus.be.server.application.in.CouponIssueCommand;
-import kr.hhplus.be.server.application.in.PaymentCommand;
 import kr.hhplus.be.server.common.IntegrationTest;
-import kr.hhplus.be.server.common.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
 import kr.hhplus.be.server.domain.coupon.Coupon;
 import kr.hhplus.be.server.domain.coupon.CouponQuantity;
 import kr.hhplus.be.server.domain.coupon.CouponService;
-import kr.hhplus.be.server.domain.coupon.UserCoupon;
-import kr.hhplus.be.server.domain.order.OrderDetail;
-import kr.hhplus.be.server.domain.order.Orders;
-import kr.hhplus.be.server.domain.payment.PaymentMethod;
-import kr.hhplus.be.server.domain.product.Product;
-import kr.hhplus.be.server.domain.product.ProductStock;
 import kr.hhplus.be.server.domain.user.User;
-import kr.hhplus.be.server.domain.user.UserWallet;
 import kr.hhplus.be.server.infrastructure.coupon.CouponJpaRepository;
 import kr.hhplus.be.server.infrastructure.coupon.CouponQuantityJpaRepository;
 import kr.hhplus.be.server.infrastructure.coupon.UserCouponJpaRepository;
@@ -30,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;

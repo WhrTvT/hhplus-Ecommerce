@@ -1,7 +1,7 @@
 package kr.hhplus.be.server.domain.payment;
 
-import kr.hhplus.be.server.common.exception.CustomException;
-import kr.hhplus.be.server.common.exception.ExceptionCode;
+import kr.hhplus.be.server.interfaces.support.exception.CustomException;
+import kr.hhplus.be.server.interfaces.support.exception.ExceptionCode;
 import kr.hhplus.be.server.domain.user.UserWallet;
 import kr.hhplus.be.server.domain.user.UserWalletRepository;
 import lombok.RequiredArgsConstructor;

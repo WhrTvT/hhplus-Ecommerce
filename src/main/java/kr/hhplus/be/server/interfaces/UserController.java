@@ -7,14 +7,12 @@ import jakarta.validation.Valid;
 import kr.hhplus.be.server.application.UserUseCase;
 import kr.hhplus.be.server.application.out.UserWalletChargeInfo;
 import kr.hhplus.be.server.application.out.UserWalletInfo;
-import kr.hhplus.be.server.common.exception.ApiResponse;
-import kr.hhplus.be.server.domain.user.UserWallet;
+import kr.hhplus.be.server.interfaces.support.log.ApiResponse;
 import kr.hhplus.be.server.interfaces.request.UserWalletChargeRequest;
 import kr.hhplus.be.server.interfaces.response.UserWalletChargeResponse;
 import kr.hhplus.be.server.interfaces.response.UserWalletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Wallet API", description = "유저의 지갑(잔액)을 관리합니다.")

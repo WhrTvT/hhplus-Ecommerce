@@ -5,13 +5,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kr.hhplus.be.server.application.OrderUseCase;
 import kr.hhplus.be.server.application.out.OrderInfo;
-import kr.hhplus.be.server.common.exception.ApiResponse;
-import kr.hhplus.be.server.interfaces.mock.response.OrderResponseMock;
+import kr.hhplus.be.server.interfaces.support.log.ApiResponse;
 import kr.hhplus.be.server.interfaces.request.OrderRequest;
 import kr.hhplus.be.server.interfaces.response.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Order API", description = "주문을 관리합니다.")
