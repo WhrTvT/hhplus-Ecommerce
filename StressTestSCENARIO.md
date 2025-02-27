@@ -167,6 +167,8 @@ const userIds = new SharedArray('userIds', function () {
     return arr.slice(0, 500);
 });
 ```
+![image](https://github.com/user-attachments/assets/7b494892-0441-4207-91ba-672a26dca315)
+![image](https://github.com/user-attachments/assets/2b101af9-fc37-4f0f-bef3-95acce423ba1)
 
 - 주요지표
   - 서버 연결 시간 (http_req_connecting)
@@ -272,6 +274,8 @@ function formatLocalDateTime(date) {
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 }
 ```
+![image](https://github.com/user-attachments/assets/a236871b-197e-4ad5-9444-1f8090eb59cd)
+![image](https://github.com/user-attachments/assets/d96776d4-7754-47b4-9ff4-09384865cc2d)
 
 - 주요지표
     - 서버 연결 시간 (http_req_connecting)
@@ -303,15 +307,19 @@ function formatLocalDateTime(date) {
        - 쿠폰 발급에 대한 트래픽이 한번에 몰리면서 쿠폰 개수 조회의 비관락(`PESSIMISTIC_WRITE`)에서 데드락이 발생했습니다.
        - 이를 해결하기 위해 분산락(Redis)으로 쿠폰 개수를 제어할 수 있지만,<br>
          현재 상황에서 적용하기는 어렵기 때문에 '쿠폰 발급이 쿠폰 개수를 초과하지 않는다'라고 가정하고 비관락을 해제했습니다.
-       
+       ![image](https://github.com/user-attachments/assets/29057eb7-0bc7-4453-9759-eee39c9bcb76)
+
     2. DB Connection Pool
        - `application.yml`에서 `maximum-pool-size` 옵션을 통해 DB Connection Pool Size를 조절할 수 있습니다.
        - 현재 `10`로 설정되어 있으며, 테스트를 위해 일시적으로 `100`으로 증가했습니다.
+        ![image](https://github.com/user-attachments/assets/497b07b6-73b0-43eb-9dce-c35ab259732c)
 
 #### 개선결과
 - 선착순 쿠폰 발급(`CouponIssue`)
   - 개선방안 적용 후, 선착순 쿠폰 발급에 대한 Peak Test의 성공률이 99%로 증가했다.
-  
+    ![image](https://github.com/user-attachments/assets/f466b69d-43f2-4570-9698-9bb3478192e9)
+    ![image](https://github.com/user-attachments/assets/c36cf5e0-6684-42d4-aa08-6748bde1c0e7)
+
   - 주요지표
     - 서버 연결 시간 (http_req_connecting)
         - 서버 연결 평균 시간 : 118.57ms / 중앙값 : 15.09ms
