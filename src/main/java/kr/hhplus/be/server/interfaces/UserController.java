@@ -3,6 +3,7 @@ package kr.hhplus.be.server.interfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import kr.hhplus.be.server.application.UserUseCase;
 import kr.hhplus.be.server.application.out.UserWalletChargeInfo;
@@ -28,9 +29,11 @@ public class UserController {
     @Parameter(name = "userWalletChargeRequest", description = "사용자 잔액충전 Req 정보")
     @PatchMapping("/charge")
     public ApiResponse<UserWalletChargeResponse> userWalletCharge(
+            HttpServletRequest request,
             @Valid @RequestBody UserWalletChargeRequest userWalletChargeRequest
     ) {
-        UserWalletChargeInfo userWalletChargeInfo = userUseCase.userWalletCharge(userWalletChargeRequest.userId(), userWalletChargeRequest.chargeAmount());
+        long userId = Long.parseLong(request.getHeader("X-User-Id"));
+        UserWalletChargeInfo userWalletChargeInfo = userUseCase.userWalletCharge(userId, userWalletChargeRequest.chargeAmount());
         return ApiResponse.success(UserWalletChargeResponse.from(userWalletChargeInfo));
     }
 

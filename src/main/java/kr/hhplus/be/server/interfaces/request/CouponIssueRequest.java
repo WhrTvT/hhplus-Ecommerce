@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record CouponIssueRequest(
         long couponId,
-        long userId,
+//        long userId,
         LocalDateTime issueAt
 ) {
 }
