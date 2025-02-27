@@ -378,7 +378,8 @@ function formatLocalDateTime(date) {
 - 근본적 원인을 찾기 위해 **5whys** 기법을 적용할 수 있다.
   - 5whys는 형식일 뿐이며, 3whys가 될 수도 있고 6whys가 될 수도 있다.
   - 이를 통해 표면적인 문제를 더 깊이 추적해서 본질적인 원인을 찾아 낼 수 있다.
-  
+  ![image](https://github.com/user-attachments/assets/e6c5b399-e3b9-4701-8cfa-bd91076152c1)
+
 - 근본적 원인을 찾았다면 해결책을 제시해야 한다.
   - 원인 파악보다, 해결책은 좀 더 쉽게 제시할 수 있다.<br>
     (메모리 누수로 인해 서버에서 OOM가 발생했다면, 비용을 투자해서 서버를 증설할 수 있다.)
