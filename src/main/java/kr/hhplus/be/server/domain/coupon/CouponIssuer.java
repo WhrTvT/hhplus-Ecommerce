@@ -59,7 +59,7 @@ public class CouponIssuer {
         List<User> users = getUsersFromQueue(coupon.getCouponId());
         for (User user : users) {
             issueCoupon(user, coupon);
-            decrementCoupon();
+            decrementCoupon(coupon.getCouponId());
             redisTemplate.opsForZSet().remove(coupon.getCouponId(), user.getUserId());
             redisTemplate.opsForSet().add(coupon.getCouponId(), user.getUserId());
         }
@@ -95,8 +95,8 @@ public class CouponIssuer {
     }
 
     // 쿠폰 감소
-    public void decrementCoupon(){
-        CouponQuantity couponQuantity = new CouponQuantity();
+    public void decrementCoupon(long couponId){
+        CouponQuantity couponQuantity = couponValidator.validateOfFindCouponQuantityById(couponId);
         couponQuantity.couponIssued();
     }
 

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,7 +14,7 @@ public interface UserCouponRepository {
 
     Page<UserCoupon> findAllByUserId(long userId, Pageable pageable);
 
-    Optional<UserCoupon> findByUserIdAndCouponId(long userId, long couponId);
+    List<UserCoupon> findByUserIdAndCouponId(long userId, long couponId);
 
     UserCoupon save(UserCoupon userCoupon);
 }

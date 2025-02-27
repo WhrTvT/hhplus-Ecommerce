@@ -35,7 +35,7 @@ public class CouponValidator {
     }
 
     public void validateOfDuplicateIssueCoupon(User user, Coupon coupon){
-        if(userCouponRepository.findByUserIdAndCouponId(user.getUserId(), coupon.getCouponId()).isPresent()){
+        if(!userCouponRepository.findByUserIdAndCouponId(user.getUserId(), coupon.getCouponId()).isEmpty()){
             throw new CustomException(ExceptionCode.CONFLICT_SERVICE, LogLevel.WARN, "Duplicate coupon issued");
         }
     }

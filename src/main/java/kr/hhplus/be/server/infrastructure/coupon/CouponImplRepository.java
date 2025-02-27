@@ -22,7 +22,7 @@ public class CouponImplRepository implements CouponRepository {
 
     @Override
     public Optional<CouponQuantity> findCouponQuantityByIdWithLock(long couponId) {
-        return couponJpaRepository.findCouponQuantityById(couponId);
+        return couponQuantityJpaRepository.findCouponQuantityByIdWithLock(couponId);
     }
 
     @Override

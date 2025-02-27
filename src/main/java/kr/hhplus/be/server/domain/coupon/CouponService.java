@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -20,6 +22,7 @@ public class CouponService {
     private final UserValidator userValidator;
     private final CouponIssuer couponIssuer;
 
+    @Transactional
     public Coupon getCoupon(CouponCommand couponCommand) {
         Coupon coupon = couponValidator.validateOfCouponFindById(couponCommand.couponId());
         CouponQuantity couponQuantity = couponValidator.validateOfFindCouponQuantityById(coupon.getCouponId());
@@ -29,8 +32,8 @@ public class CouponService {
     }
 
     @Transactional
-    public Boolean issue(CouponIssueCommand couponIssueCommand) {
-//    public UserCoupon issue(CouponIssueCommand couponIssueCommand) {
+//    public Boolean issue(CouponIssueCommand couponIssueCommand) {
+    public UserCoupon issue(CouponIssueCommand couponIssueCommand) {
         Coupon coupon = couponValidator.validateOfCouponFindById(couponIssueCommand.couponId());
 
         User user = userValidator.validateOfUserFindById(couponIssueCommand.userId());
@@ -38,8 +41,22 @@ public class CouponService {
         // 중복 발급 여부 확인
         couponValidator.validateOfDuplicateIssueCoupon(user, coupon);
 
-        // 대기열 처리
-        Boolean issuedCoupon = couponIssuer.addQueue(user, coupon);
+        // TODO - 대기열 처리
+//        Boolean issuedCoupon = couponIssuer.addQueue(user, coupon);
+        LocalDateTime issueAt = LocalDateTime.now();
+
+        UserCoupon issuedCoupon = userCouponRepository.save(UserCoupon.builder()
+                .couponId(coupon.getCouponId())
+                .userId(user.getUserId())
+                .status(String.valueOf(UserCouponStatus.UNUSED))
+                .issueAt(issueAt)
+                .coupon(coupon)
+                .user(user)
+                .build());
+
+        couponIssuer.decrementCoupon(issuedCoupon.getCouponId());
+
+        log.info("'{}' 유저에게 '{}' 쿠폰 발급", user.getName(), coupon.getCouponName());
 
         return issuedCoupon;
     }

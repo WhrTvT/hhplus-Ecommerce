@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface UserCouponJpaRepository extends JpaRepository<UserCoupon, Long> {
     Page<UserCoupon> findByUserId(long userId, Pageable pageable);
 
     @Query("SELECT uc FROM UserCoupon uc WHERE uc.userId = ?1 AND uc.couponId = ?2")
-    Optional<UserCoupon> findByUserIdAndCouponId(long userId, long couponId);
+    List<UserCoupon> findByUserIdAndCouponId(long userId, long couponId);
 }
