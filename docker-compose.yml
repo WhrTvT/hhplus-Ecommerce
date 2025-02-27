@@ -71,15 +71,16 @@ services:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     ports:
-      - "9092:9092"
+      # port는 항상 외부:내부가 같도록... 유지
+      # 위 내용 무시하면 'Error connecting to node kafka:9092' 에러 발생
+      - "19092:19092"
     environment:
-      KAFKA_LISTENERS: PLAINTEXT://:9092,EXTERNAL://:9092
-#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
-#      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENERS: PLAINTEXT://:9092,EXTERNAL://:19092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
       ALLOW_PLAINTEXT_LISTENER: yes
     depends_on:
       - zookeeper
@@ -88,14 +89,14 @@ services:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     environment:
-      KAFKA_CLUSTERS_0_NAME: LocalKafka
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_NAME: kafka
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: localhost:19092
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
       KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
     depends_on:
       - kafka
     ports:
-      - "9090:8080"
+      - "9091:8080"
 networks:
   default:
     driver: bridge
