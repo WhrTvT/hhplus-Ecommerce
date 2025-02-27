@@ -1,6 +1,5 @@
 package kr.hhplus.be.server.kafka;
 
-import kr.hhplus.be.server.KafkaTestContainer;
 import kr.hhplus.be.server.common.IntegrationTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
