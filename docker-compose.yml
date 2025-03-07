@@ -97,6 +97,41 @@ services:
       - kafka
     ports:
       - "9091:8080"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - D:\study\server-java\k6\grafana-provisioning:/etc/grafana/provisioning
+      - D:\study\server-java\k6\grafana-dashboard:/dashboard
+    depends_on:
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --web.enable-remote-write-receiver
+      - --enable-feature=native-histograms
+      - --config.file=/etc/prometheus/prometheus.yml
+
+  k6:
+    image: grafana/k6
+    container_name: k6
+    volumes:
+      - D:\study\server-java\k6\k6-scripts:/scripts
+    command: run -o experimental-prometheus-rw /scripts/load.js
+    environment:
+      - K6_PROMETHEUS_RW_SERVER_URL=http://prometheus:9090/api/v1/write
+      - K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM=true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - prometheus
 networks:
   default:
     driver: bridge
